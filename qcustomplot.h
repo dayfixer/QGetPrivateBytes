@@ -2591,6 +2591,8 @@ public:
   // setters:
   void setAutoSqueeze(bool enabled);
   
+  QVector<DataType>* coreData() {return &mData; }  // FEAT: Open mData to public
+
   // non-virtual methods:
   void set(const QCPDataContainer<DataType> &data);
   void set(const QVector<DataType> &data, bool alreadySorted=false);

@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,1,7">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,4,4">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,4,0,5">
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
@@ -34,9 +34,37 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="refreshProcessBtn">
+        <property name="text">
+         <string>refreshID</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLineEdit" name="processIdEdit">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>10</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="inputMask">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="maxLength">
+         <number>6</number>
+        </property>
+        <property name="placeholderText">
+         <string>此处必须有PID值，自动同步</string>
         </property>
        </widget>
       </item>
@@ -52,7 +80,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="timeInterEdit"/>
+       <widget class="QLineEdit" name="timeInterEdit">
+        <property name="inputMask">
+         <string notr="true"/>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="graphInter">
@@ -67,7 +99,30 @@
      </layout>
     </item>
     <item row="2" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,2,2,2,2,2">
+      <item>
+       <widget class="QLabel" name="countLabel">
+        <property name="text">
+         <string>bufferNum:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>999999999</number>
+        </property>
+        <property name="singleStep">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QPushButton" name="startBtn">
         <property name="text">
@@ -83,7 +138,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="refreshBtn">
+       <widget class="QPushButton" name="refreshGraphBtn">
         <property name="text">
          <string>refreshGraph</string>
         </property>

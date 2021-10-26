@@ -16,6 +16,7 @@ private:
     unsigned int processId_;
 signals:
     void sigPrivateBytes(Frame);
+    void sigInexistence(QString);
 };
 
 #endif // PLOTOBJECT_H

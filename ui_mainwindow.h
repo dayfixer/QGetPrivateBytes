@@ -19,6 +19,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 #include <qcustomplot.h>
@@ -33,6 +34,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QComboBox *comboBox;
+    QPushButton *refreshProcessBtn;
     QLineEdit *processIdEdit;
     QHBoxLayout *horizontalLayout_3;
     QLabel *timerInter;
@@ -40,9 +42,11 @@ public:
     QLabel *graphInter;
     QLineEdit *graphInterEdit;
     QHBoxLayout *horizontalLayout_2;
+    QLabel *countLabel;
+    QSpinBox *spinBox;
     QPushButton *startBtn;
     QPushButton *stopBtn;
-    QPushButton *refreshBtn;
+    QPushButton *refreshGraphBtn;
     QPushButton *clearBtn;
     QCustomPlot *customPlot;
     QMenuBar *menubar;
@@ -70,14 +74,26 @@ public:
 
         horizontalLayout->addWidget(comboBox);
 
+        refreshProcessBtn = new QPushButton(centralwidget);
+        refreshProcessBtn->setObjectName(QString::fromUtf8("refreshProcessBtn"));
+
+        horizontalLayout->addWidget(refreshProcessBtn);
+
         processIdEdit = new QLineEdit(centralwidget);
         processIdEdit->setObjectName(QString::fromUtf8("processIdEdit"));
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(processIdEdit->sizePolicy().hasHeightForWidth());
+        processIdEdit->setSizePolicy(sizePolicy);
+        processIdEdit->setMinimumSize(QSize(10, 0));
+        processIdEdit->setInputMask(QString::fromUtf8(""));
+        processIdEdit->setMaxLength(6);
 
         horizontalLayout->addWidget(processIdEdit);
 
-        horizontalLayout->setStretch(0, 2);
         horizontalLayout->setStretch(1, 4);
-        horizontalLayout->setStretch(2, 4);
+        horizontalLayout->setStretch(3, 5);
 
         gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
 
@@ -90,6 +106,7 @@ public:
 
         timeInterEdit = new QLineEdit(centralwidget);
         timeInterEdit->setObjectName(QString::fromUtf8("timeInterEdit"));
+        timeInterEdit->setInputMask(QString::fromUtf8(""));
 
         horizontalLayout_3->addWidget(timeInterEdit);
 
@@ -108,6 +125,20 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        countLabel = new QLabel(centralwidget);
+        countLabel->setObjectName(QString::fromUtf8("countLabel"));
+
+        horizontalLayout_2->addWidget(countLabel);
+
+        spinBox = new QSpinBox(centralwidget);
+        spinBox->setObjectName(QString::fromUtf8("spinBox"));
+        spinBox->setMinimum(1);
+        spinBox->setMaximum(999999999);
+        spinBox->setSingleStep(100);
+        spinBox->setValue(100);
+
+        horizontalLayout_2->addWidget(spinBox);
+
         startBtn = new QPushButton(centralwidget);
         startBtn->setObjectName(QString::fromUtf8("startBtn"));
 
@@ -118,16 +149,21 @@ public:
 
         horizontalLayout_2->addWidget(stopBtn);
 
-        refreshBtn = new QPushButton(centralwidget);
-        refreshBtn->setObjectName(QString::fromUtf8("refreshBtn"));
+        refreshGraphBtn = new QPushButton(centralwidget);
+        refreshGraphBtn->setObjectName(QString::fromUtf8("refreshGraphBtn"));
 
-        horizontalLayout_2->addWidget(refreshBtn);
+        horizontalLayout_2->addWidget(refreshGraphBtn);
 
         clearBtn = new QPushButton(centralwidget);
         clearBtn->setObjectName(QString::fromUtf8("clearBtn"));
 
         horizontalLayout_2->addWidget(clearBtn);
 
+        horizontalLayout_2->setStretch(1, 2);
+        horizontalLayout_2->setStretch(2, 2);
+        horizontalLayout_2->setStretch(3, 2);
+        horizontalLayout_2->setStretch(4, 2);
+        horizontalLayout_2->setStretch(5, 2);
 
         gridLayout->addLayout(horizontalLayout_2, 2, 0, 1, 1);
 
@@ -160,12 +196,15 @@ public:
         label->setText(QCoreApplication::translate("MainWindow", "processID:", nullptr));
         comboBox->setItemText(0, QCoreApplication::translate("MainWindow", "111", nullptr));
 
+        refreshProcessBtn->setText(QCoreApplication::translate("MainWindow", "refreshID", nullptr));
         processIdEdit->setText(QString());
+        processIdEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "\346\255\244\345\244\204\345\277\205\351\241\273\346\234\211PID\345\200\274\357\274\214\350\207\252\345\212\250\345\220\214\346\255\245", nullptr));
         timerInter->setText(QCoreApplication::translate("MainWindow", "processRefreshInterval(ms):", nullptr));
         graphInter->setText(QCoreApplication::translate("MainWindow", "graphRefreshInterval(ms):", nullptr));
+        countLabel->setText(QCoreApplication::translate("MainWindow", "bufferNum:", nullptr));
         startBtn->setText(QCoreApplication::translate("MainWindow", "startTimer", nullptr));
         stopBtn->setText(QCoreApplication::translate("MainWindow", "stopTimer", nullptr));
-        refreshBtn->setText(QCoreApplication::translate("MainWindow", "refreshGraph", nullptr));
+        refreshGraphBtn->setText(QCoreApplication::translate("MainWindow", "refreshGraph", nullptr));
         clearBtn->setText(QCoreApplication::translate("MainWindow", "clearGraph", nullptr));
     } // retranslateUi
 

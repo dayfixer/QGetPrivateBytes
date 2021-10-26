@@ -19,7 +19,11 @@ void PlotObject::getProcessStatus()
     DWORD processID = this->processId_;
     hProcess = OpenProcess(PROCESS_QUERY_INFORMATION |PROCESS_VM_READ, FALSE, processID);
     if (NULL == hProcess)
+    {
+        emit sigInexistence("ProcessID doesn't exist!");
+        CloseHandle(hProcess);
         return;
+    }
 
     if (GetProcessMemoryInfo(hProcess, (PROCESS_MEMORY_COUNTERS *)&pmc, sizeof(pmc)))
     {
