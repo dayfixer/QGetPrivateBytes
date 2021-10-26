@@ -135,9 +135,9 @@ void MainWindow::getProcessMap()
 			continue;
 		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, 0, processID);
 		wchar_t buffer[50];
-		GetModuleBaseNameW(hProcess, nullptr, buffer, 50);
+		DWORD ret = GetModuleBaseNameW(hProcess, nullptr, buffer, 50);
 		CloseHandle(hProcess);
-        if (wcslen(buffer) > 4)
+        if (ret != 0)
         {
 			processMap_.insert(QString::fromWCharArray(buffer), (int)processID);
             processList_ << QString::fromWCharArray(buffer);
