@@ -217,16 +217,11 @@ void MainWindow::getProcessMap()
 			continue;
 		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, 0, processID);
 		wchar_t buffer[50];
-<<<<<<< Updated upstream
-		DWORD ret = GetModuleBaseNameW(hProcess, nullptr, buffer, 50);
-		CloseHandle(hProcess);
-        if (ret != 0)
-=======
+
         DWORD ret = GetModuleBaseNameW(hProcess, nullptr, buffer, 50);
 		CloseHandle(hProcess);
         // GetModuleBaseNameW fails when ret is 0
         if (ret !=0 )
->>>>>>> Stashed changes
         {
             QString key = QString::fromWCharArray(buffer) + " | " + QString::number(processID); // 防止重名进程
             processMap_.insert(key, (int)processID);
