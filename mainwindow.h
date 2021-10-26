@@ -31,6 +31,7 @@ private:
     void refreshData();
     void getProcessMap();
     void onSetCurrentProcessId(QString);
+    void onClearGraph();
 private:
     Ui::MainWindow *ui;
 

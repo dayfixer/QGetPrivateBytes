@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 	ui->timeInterEdit->setText(QString::number(1000));
 	ui->graphInterEdit->setText(QString::number(5000));
+    connect(ui->clearBtn, &QPushButton::clicked, this, &MainWindow::onClearGraph);
 
     // Timer
     timer_ = new QTimer;
@@ -65,7 +66,9 @@ void MainWindow::drawData(Frame frame)
     unsigned long data =  frame.private_bytes/1024;
 
     ui->customPlot->graph(0)->addData(time, data);
-    ui->customPlot->graph(0)->rescaleAxes();
+    ui->customPlot->graph(0)->rescaleAxes(false);
+    int count = ui->customPlot->graph(0)->dataCount();
+    ui->statusbar->showMessage("count: " + QString::number(count));
 
     if (file_->open(QIODevice::ReadWrite | QIODevice::Append))
     {
@@ -149,4 +152,10 @@ void MainWindow::onSetCurrentProcessId(QString processName)
     int id = processMap_.value(processName);
     ui->comboBox->setCurrentText(processName);
     ui->processIdEdit->setText(QString::number(id));
+}
+
+void MainWindow::onClearGraph()
+{
+    ui->customPlot->graph(0)->data().data()->clear();
+    this->refreshData();
 }

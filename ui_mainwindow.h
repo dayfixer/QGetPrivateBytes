@@ -43,6 +43,7 @@ public:
     QPushButton *startBtn;
     QPushButton *stopBtn;
     QPushButton *refreshBtn;
+    QPushButton *clearBtn;
     QCustomPlot *customPlot;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -122,6 +123,11 @@ public:
 
         horizontalLayout_2->addWidget(refreshBtn);
 
+        clearBtn = new QPushButton(centralwidget);
+        clearBtn->setObjectName(QString::fromUtf8("clearBtn"));
+
+        horizontalLayout_2->addWidget(clearBtn);
+
 
         gridLayout->addLayout(horizontalLayout_2, 2, 0, 1, 1);
 
@@ -160,6 +166,7 @@ public:
         startBtn->setText(QCoreApplication::translate("MainWindow", "startTimer", nullptr));
         stopBtn->setText(QCoreApplication::translate("MainWindow", "stopTimer", nullptr));
         refreshBtn->setText(QCoreApplication::translate("MainWindow", "refreshGraph", nullptr));
+        clearBtn->setText(QCoreApplication::translate("MainWindow", "clearGraph", nullptr));
     } // retranslateUi
 
 };
