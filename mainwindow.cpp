@@ -29,7 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
 	ui->timeInterEdit->setText(QString::number(1000));
     ui->graphInterEdit->setText(QString::number(2000));
     connect(ui->clearBtn, &QPushButton::clicked, this, &MainWindow::onClearGraph);
-    this->setWindowTitle("GetPrivateBytes v" + QString::number(VERSION_MAJOR)+ "." +  QString::number(VERSION_MINOR) + QDateTime::currentDateTime().toString(" yyyy-MM-dd-HH:mm"));
+    this->setWindowTitle("GetPrivateBytes v" + QString::number(VERSION_MAJOR)+ "."
+                         +  QString::number(VERSION_MINOR)
+                         + " | Boot Time: "
+                         + QDateTime::currentDateTime().toString("yyyy-MM-dd-HH:mm:ss"));
     this->setWindowIcon(QApplication::style()->standardIcon((QStyle::StandardPixmap)40));
     // Timer
     timer_ = new QTimer;
@@ -85,7 +88,7 @@ void MainWindow::init_graph()
     //ui->customPlot->graph(0)->rescaleAxes(false);
     //ui->customPlot->graph(0)->setLineStyle(QCPGraph::lsLine);
     dateTicker = QSharedPointer<QCPAxisTickerDateTime>(new QCPAxisTickerDateTime);
-    dateTicker->setDateTimeFormat("MM-dd hh:mm::ss");
+    dateTicker->setDateTimeFormat("MM-dd hh:mm:ss:zzz");
     ui->customPlot->xAxis->setTicker(dateTicker);
     mData_ = ui->customPlot->graph(0)->data()->coreData();  // user-defined api(change src), qcustomplot.h:line 2594
     //mData->clear();
@@ -94,7 +97,9 @@ void MainWindow::init_graph()
     //backRole.setColor("skyblue");
     //backRole.setStyle(Qt::SolidPattern);
     //ui->customPlot->setBackground(backRole);
-    ui->customPlot->xAxis->setTickLabelRotation(10);
+    ui->customPlot->xAxis->setTickLabelRotation(5);
+    //ui->customPlot->xAxis->setNumberPrecision(1);
+    ui->customPlot->xAxis->ticker()->setTickStepStrategy(QCPAxisTicker::tssReadability);
 }
 
 void MainWindow::disableUI(bool flag)
@@ -129,7 +134,7 @@ void MainWindow::drawData(Frame frame)
     newPoint.value = (double)data;
     mData_->append(newPoint);
     currentNum_++;
-    if (currentNum_ == 1) min_ = max_ = data;
+    if (currentNum_ == 1) { min_ = data -5 ;max_ = data - 5;}
     int count = ui->customPlot->graph(0)->dataCount();
     ui->statusbar->showMessage("Count: " + QString::number(count));
 
@@ -217,7 +222,6 @@ void MainWindow::getProcessMap()
 			continue;
 		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, 0, processID);
 		wchar_t buffer[50];
-
         DWORD ret = GetModuleBaseNameW(hProcess, nullptr, buffer, 50);
 		CloseHandle(hProcess);
         // GetModuleBaseNameW fails when ret is 0
