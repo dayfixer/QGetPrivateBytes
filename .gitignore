@@ -13,6 +13,7 @@
 *.csv
 .gitattributes
 .qmake.stash
+install*/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

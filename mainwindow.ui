@@ -25,7 +25,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox"/>
+       <widget class="QComboBox" name="processIdComboBox"/>
       </item>
       <item>
        <widget class="QPushButton" name="refreshProcessBtn">
@@ -58,14 +58,14 @@
          <number>6</number>
         </property>
         <property name="placeholderText">
-         <string>此处必须有PID值，自动同步</string>
+         <string>There must be a PID value here, automatically synchronized</string>
         </property>
        </widget>
       </item>
      </layout>
     </item>
     <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,5,0,5">
       <item>
        <widget class="QLabel" name="timerInter">
         <property name="text">
@@ -74,10 +74,22 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="timeInterEdit">
-        <property name="inputMask">
-         <string notr="true"/>
-        </property>
+       <widget class="QComboBox" name="processInterComboBox">
+        <item>
+         <property name="text">
+          <string>100</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>500</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1000</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>
@@ -88,7 +100,28 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="graphInterEdit"/>
+       <widget class="QComboBox" name="graphInterComboBox">
+        <item>
+         <property name="text">
+          <string>1000</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1500</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2000</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>3000</string>
+         </property>
+        </item>
+       </widget>
       </item>
      </layout>
     </item>
@@ -102,19 +135,37 @@
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="spinBox">
-        <property name="minimum">
-         <number>1</number>
-        </property>
-        <property name="maximum">
-         <number>999999999</number>
-        </property>
-        <property name="singleStep">
-         <number>100</number>
-        </property>
-        <property name="value">
-         <number>100</number>
-        </property>
+       <widget class="QComboBox" name="bufferComboBox">
+        <item>
+         <property name="text">
+          <string>100</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1000</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10000</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>100000</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1000000</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10000000</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item>

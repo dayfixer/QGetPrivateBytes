@@ -29,3 +29,17 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+TRANSLATIONS    +=  QGetPrivateByte_Zh_cn.ts
+
+CONFIG(release, debug|release){
+    MOC_DIR = bin/release/moc
+	RCC_DIR = bin/release/rcc
+	UI_DIR = bin/release/ui
+	OBJECTS_DIR = bin/release/obj
+} else {
+    MOC_DIR = bin/debug/moc
+	RCC_DIR = bin/debug/rcc
+	UI_DIR = bin/debug/ui
+	OBJECTS_DIR = bin/debug/obj
+}

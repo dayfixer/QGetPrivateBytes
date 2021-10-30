@@ -26,14 +26,15 @@ MainWindow::MainWindow(QWidget *parent)
 {
     // UI
     ui->setupUi(this);
-	ui->timeInterEdit->setText(QString::number(1000));
-    ui->graphInterEdit->setText(QString::number(2000));
+    ui->processInterComboBox->setCurrentText(QString::number(1000));
+    ui->graphInterComboBox->setCurrentText(QString::number(2000));
     connect(ui->clearBtn, &QPushButton::clicked, this, &MainWindow::onClearGraph);
     this->setWindowTitle("GetPrivateBytes v" + QString::number(VERSION_MAJOR)+ "."
                          +  QString::number(VERSION_MINOR)
                          + " | Boot Time: "
                          + QDateTime::currentDateTime().toString("yyyy-MM-dd-HH:mm:ss"));
     this->setWindowIcon(QApplication::style()->standardIcon((QStyle::StandardPixmap)40));
+
     // Timer
     timer_ = new QTimer;
     timer_update_ = new QTimer;
@@ -59,13 +60,16 @@ MainWindow::MainWindow(QWidget *parent)
     init_graph();
 
     // ComboBox
-    ui->comboBox->setModel(listModel_);
-    getProcessMap();
-    connect(ui->comboBox, &QComboBox::currentTextChanged, this, &MainWindow::onSetCurrentProcessId);
-    ui->comboBox->setEditable(false);
+    ui->processIdComboBox->setModel(listModel_);
+    this->getProcessMap();
+    connect(ui->processIdComboBox, &QComboBox::currentTextChanged, this, &MainWindow::onSetCurrentProcessId);
+    ui->processIdComboBox->setEditable(false);
+    ui->graphInterComboBox->setEditable(true);
+    ui->bufferComboBox->setEditable(true);
 
-    // Spin box
-    //connect(ui->spinBox, QOverload<int>::of(&QSpinBox::valueChanged), this, QOverload<int>::of(&MainWindow::setBufferNum));
+    ui->processIdComboBox->setValidator(new QIntValidator);
+    ui->graphInterComboBox->setValidator(new QIntValidator);
+    ui->bufferComboBox->setValidator(new QIntValidator);
 }
 
 MainWindow::~MainWindow()
@@ -106,10 +110,10 @@ void MainWindow::disableUI(bool flag)
 {
     ui->processIdEdit->setEnabled(!flag);
     ui->refreshProcessBtn->setEnabled(!flag);
-    ui->comboBox->setEnabled(!flag);
-    ui->timeInterEdit->setEnabled(!flag);
-    ui->graphInterEdit->setEnabled(!flag);
-    ui->spinBox->setEnabled(!flag);
+    ui->processIdComboBox->setEnabled(!flag);
+    ui->processInterComboBox->setEnabled(!flag);
+    ui->graphInterComboBox->setEnabled(!flag);
+    ui->bufferComboBox->setEnabled(!flag);
     ui->startBtn->setEnabled(!flag);
 }
 
@@ -145,17 +149,17 @@ void MainWindow::drawData(Frame frame)
 void MainWindow::onStart()
 {
     // get parameters from UI
-	if (ui->timeInterEdit->text().isEmpty())
-		ui->timeInterEdit->setText(QString::number(1000));
-	if (ui->graphInterEdit->text().isEmpty())
-        ui->graphInterEdit->setText(QString::number(2000));
+	if (ui->processInterComboBox->currentText().isEmpty())
+		ui->processInterComboBox->setCurrentText(QString::number(1000));
+	if (ui->graphInterComboBox->currentText().isEmpty())
+        ui->graphInterComboBox->setCurrentText(QString::number(2000));
 
-	int processRefreshTime = ui->timeInterEdit->text().toInt();
-    int graphRefreshTime = ui->graphInterEdit->text().toInt();
+	int processRefreshTime = ui->processInterComboBox->currentText().toInt();
+    int graphRefreshTime = ui->graphInterComboBox->currentText().toInt();
 
-    bufferNum_ = ui->spinBox->value(); // to ms
+    bufferNum_ = ui->bufferComboBox->currentText().toInt(); // to ms
 
-    mData_->reserve(ui->spinBox->value());
+    mData_->reserve(bufferNum_);
 
 	timer_->setInterval(processRefreshTime);
 	timer_update_->setInterval(graphRefreshTime);
@@ -247,7 +251,7 @@ void MainWindow::onSetCurrentProcessId(QString processName)
     else
     {
         currentId_ = processMap_.value(processName);
-        ui->comboBox->setCurrentText(processName);
+        ui->processIdComboBox->setCurrentText(processName);
         ui->processIdEdit->setText(QString::number(currentId_));
     }
 }
@@ -282,7 +286,7 @@ void MainWindow::setComboBoxIndex(QString inputId)
         iter++;
     }
     if (key.isEmpty())
-       ui->comboBox->setCurrentIndex(-1);
+       ui->processIdComboBox->setCurrentIndex(-1);
     else
-        ui->comboBox->setCurrentText(key);
+        ui->processIdComboBox->setCurrentText(key);
 }
