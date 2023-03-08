@@ -338,5 +338,6 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
-vendor/qcustomplot/documentation/
-vendor/qcustomplot/examples/
+vendor/
+
+build/
