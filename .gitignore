@@ -337,4 +337,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
-install-Release-x64.zip
+
+vendor/qcustomplot/documentation/
+vendor/qcustomplot/examples/
